@@ -1,56 +1,151 @@
-import React from 'react';
-import logo from './logo.svg';
-import { Counter } from './features/counter/Counter';
-import './App.css';
+
+
+
+import { useState } from "react";
+import "./App.css";
+import ProgressBar from "./ProgressBar";
+
+const questions = [
+  {
+    questionText: "What language is spoken in Brasil?",
+    answerOptions: [
+      { answerText: "Portugues", isCorrect: true },
+      { answerText: "English", isCorrect: false },
+      { answerText: "French", isCorrect: false },
+      { answerText: "German", isCorrect: false },
+    ],
+  },
+  {
+    questionText:
+      "Which countries have the hieghest and lowest life expectancy in the world?",
+    answerOptions: [
+      { answerText: "Australia and Afghnistan", isCorrect: false },
+      { answerText: "Japan and sierra", isCorrect: true },
+      { answerText: "Italy", isCorrect: false },
+      { answerText: "Brasil", isCorrect: false },
+    ],
+  },
+  {
+    questionText: "Which company created the iPhone?",
+    answerOptions: [
+      { answerText: "Intel", isCorrect: false },
+      { answerText: "Amazon", isCorrect: false },
+      { answerText: "Apple", isCorrect: true },
+      { answerText: "Microsoft", isCorrect: false },
+    ],
+  },
+  {
+    questionText: "How to learn to program?",
+    answerOptions: [
+      { answerText: "Practising what you learn", isCorrect: true },
+      { answerText: "Watching video", isCorrect: false },
+      { answerText: "Reading", isCorrect: false },
+      { answerText: "Writing", isCorrect: false },
+    ],
+  },
+];
 
 function App() {
+  const [showScore, setShowScore] = useState(false);
+  const [score, setScore] = useState(0);
+  const [currentQuestion, setCurrentQuestion] = useState(0);
+  const [wrongscore,setWrongscore]=useState(0);
+  const [answred,setAnswred]=useState(0)
+
+  function handleAnswer(isCorrect) {
+    if (isCorrect) {
+      setScore(score + 1);
+      setAnswred(answred+1)
+    }
+    if(!isCorrect){
+      setWrongscore(wrongscore+1)
+      setAnswred(answred+1)
+
+    }
+    
+
+    const nextQuestion = currentQuestion + 1;
+    if (nextQuestion < questions.length) {
+      setCurrentQuestion(nextQuestion);
+    } else {
+      setShowScore(true);
+    }
+  } 
+
+
+  let actualScore=(score*5-(wrongscore*4));
+
+  let hangleback=()=>{
+if(currentQuestion>=1){
+    let Question = currentQuestion - 1;
+    setCurrentQuestion(Question);}
+
+
+
+  }
+let handlenext=()=>{
+  if(currentQuestion<3) {
+   const Question1 = currentQuestion +1;
+  setCurrentQuestion(Question1);}
+
+
+}
+  
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <Counter />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <span>
-          <span>Learn </span>
-          <a
-            className="App-link"
-            href="https://reactjs.org/"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            React
-          </a>
-          <span>, </span>
-          <a
-            className="App-link"
-            href="https://redux.js.org/"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Redux
-          </a>
-          <span>, </span>
-          <a
-            className="App-link"
-            href="https://redux-toolkit.js.org/"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Redux Toolkit
-          </a>
-          ,<span> and </span>
-          <a
-            className="App-link"
-            href="https://react-redux.js.org/"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            React Redux
-          </a>
-        </span>
-      </header>
+    <div className="app">
+      {showScore ? (
+        <div className="score-section">
+          <b className="points">Points</b> <span>{actualScore}</span>
+          <div className="result_res"><b>Right Ans</b>  <progress className="rightans" value={score} max={4} />
+          <b>Wrong Ans</b> <progress className="wrongans" value={wrongscore} max={4} />
+          </div> 
+         
+        <div className="result_footer">  You scored {score} out of {questions.length} </div>
+        </div>
+      ) : (
+        <>
+          <div className="question-section">
+            <div className="question-count"> 
+            <b className="points">Points</b> <span className="score">{actualScore}</span>
+             {/* <div className="progress"><b>Right Ans</b> <progress className="rightans" value={score} max={4} /></div> 
+            <div> <b>Wrong Ans</b> <progress className="wrongans" value={wrongscore} max={4} style={styles}></progress></div> */}
+            
+            <span >Answered questiona {answred}</span>/{questions.length}
+
+            <ProgressBar name="Right Ans"/>
+            <ProgressBar name="Wrong Ans"/>
+            
+            
+              <span className="question">Question {currentQuestion + 1}</span>/{questions.length}
+            
+            </div>
+            <div className="question-text">
+              {questions[currentQuestion].questionText}
+            </div>
+          </div>
+
+          <div className="answer-section">
+            {questions[currentQuestion].answerOptions.map(
+              (answerOption, index) => (
+                <button
+                  onClick={() => handleAnswer(answerOption.isCorrect)}
+                  key={index}
+                >
+                  {answerOption.answerText}
+                </button>
+              )
+            )}
+          </div>
+          <div>
+            <button onClick={hangleback}>Back</button>
+            <button onClick={handlenext}>Next</button>
+          </div>
+          <b>Note: Right ans is 5 points and Wrong ans leads to -4 ponits</b>
+         
+        </>
+         
+      )}
     </div>
   );
 }
