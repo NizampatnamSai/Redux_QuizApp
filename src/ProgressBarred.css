@@ -1,0 +1,6 @@
+progress::-webkit-progress-value { background: red;
+    /* width: 50px; */
+   }
+progress{
+    background-color: red;
+}

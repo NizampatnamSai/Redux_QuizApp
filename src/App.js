@@ -4,6 +4,16 @@
 import { useState } from "react";
 import "./App.css";
 import ProgressBar from "./ProgressBar";
+import ProgressBarred from "./ProgressBarred";
+// import { Dispatch } from "react";
+import { useDispatch } from 'react-redux'
+import { Right, wrong } from "./features/counter/counterSlice";
+ 
+
+
+// const dispatch=Dispatch()
+
+
 
 const questions = [
   {
@@ -46,6 +56,9 @@ const questions = [
 ];
 
 function App() {
+
+const dispatch=useDispatch()
+
   const [showScore, setShowScore] = useState(false);
   const [score, setScore] = useState(0);
   const [currentQuestion, setCurrentQuestion] = useState(0);
@@ -56,10 +69,14 @@ function App() {
     if (isCorrect) {
       setScore(score + 1);
       setAnswred(answred+1)
+
+      dispatch(Right())
     }
     if(!isCorrect){
       setWrongscore(wrongscore+1)
       setAnswred(answred+1)
+      dispatch(wrong())
+
 
     }
     
@@ -113,8 +130,9 @@ let handlenext=()=>{
             
             <span >Answered questiona {answred}</span>/{questions.length}
 
-            <ProgressBar name="Right Ans"/>
-            <ProgressBar name="Wrong Ans"/>
+            <ProgressBar name="Right Ans" color='green'/>
+            <ProgressBarred name="Wrong Ans" color='red'/>
+
             
             
               <span className="question">Question {currentQuestion + 1}</span>/{questions.length}
