@@ -16,7 +16,7 @@ body {
   background-color: #252d4a;
   width: 450px;
   min-height: 200px;
-  height: 400px;
+  height: 500px;
   border-radius: 15px;
   padding: 20px;
   box-shadow: 10px 10px 42px 0px rgba(0, 0, 0, 0.75);
@@ -169,4 +169,40 @@ button svg {
    background-color: red;
    width: 150px;
 
+ }
+
+
+ .asnque {
+   margin-left: 25px;
+ }
+
+ .countdow {
+   border: 2px solid lightcoral;
+   width: fit-content;
+ }
+
+ .btn button {
+      width: 45%;
+      background-color: lightcoral;
+ }
+
+ .btn {
+   display: flex;
+   justify-content: space-around;
+ }
+
+
+ .resques {
+   margin-top: 15px;
+   font-size: large;
+ }
+
+ .scip button {
+       width: 40%;
+       background-color: rgb(231, 56, 56);
+       margin-left: 30%;
+ }
+
+ .btn_skip {
+   justify-content: center;
  }

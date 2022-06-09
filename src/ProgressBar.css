@@ -4,4 +4,5 @@ progress::-webkit-progress-value { background: green;
    }
 progress{
     background-color: green;
+    /* margin-left: 112px; */
 }

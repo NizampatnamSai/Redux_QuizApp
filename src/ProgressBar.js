@@ -9,7 +9,7 @@ function ProgressBar({name}) {
 
   return (
     <div>
-      {name}
+      {name }  {`    `} 
       <progress value={rightvalue} max={4}/>
     </div>
   )
